@@ -1,11 +1,11 @@
 <template>
-  <div id="app">
-    <router-view></router-view>
-  </div>
+  <div>生日快乐</div>
 </template>
 <script>
 export default {
-  methods: {}
+  data() {
+    return {}
+  }
 }
 
 </script>
