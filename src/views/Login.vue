@@ -21,15 +21,16 @@
       />
       <div style="margin: 16px;">
         <van-button round block type="info" native-type="submit" color="skyblue">
-          提交
+          登录
         </van-button>
       </div>
+      <p class="tips">没有账号?去 <router-link to='/register' class="router_register">注册</router-link> </p>
     </van-form>
   </div>
 </template>
 <script>
 // 下载的axios 在哪里用就在那里导入
-import axios from 'axios'
+// import axios from 'axios'
 export default {
   data() {
     return {
@@ -50,7 +51,8 @@ export default {
   },
   methods: {
     async login() {
-      const res = await axios.post('http://localhost:3000/login', {
+      // 因为axios挂载到vue原型上,且基地址也绑定,所以可以采用简写
+      const res = await this.$axios.post('/login', {
         username: this.username,
         password: this.password
       })
@@ -59,7 +61,9 @@ export default {
       // 对象结构 提取res对象中 statusCode message 的属性
       const { statusCode, message } = res.data
       if (statusCode === 200) {
+        // vant中的属性可以通过$直接调用,因为已经挂载到vue的原型上了
         this.$toast.success(message)
+        // 校验通过跳转到user页面
         this.$router.push('/user')
       } else {
         this.$toast(message)
@@ -70,5 +74,12 @@ export default {
 
 </script>
 <style lang='less'>
-
+.tips{
+  font-size: 14px;
+  text-align:right;
+  padding-right:20px;
+}
+.router_register{
+  color: red;
+}
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="hm_header">
 <!-- 左边箭头 -->
-    <div class="back" @clikc='back'>
+    <div class="back" @click='back'>
       <span class="iconfont iconjiantou2"></span>
     </div>
 <!-- 中间标题 -->
@@ -14,6 +14,7 @@ export default {
   methods: {
     back() {
       this.$router.go(-1)
+      console.log(111);
     }
   }
 }
