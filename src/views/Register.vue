@@ -24,7 +24,7 @@
       :rules='rules.password'
     />
     <div style="margin: 16px;">
-      <van-button round block type="info" native-type="submit">
+      <van-button round block type="info" native-type="submit" color='skyblue'>
         注册
       </van-button>
     </div>
