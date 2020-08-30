@@ -67,7 +67,18 @@ export default {
       if (statusCode === 200) {
         this.$toast.success(message)
         // 注册成功后跳转到login页面
-        this.$router.push('/login')
+        // 使用query传参数不一定安全
+        // this.$router.push({
+        //   path: '/login',
+        //   query: {
+        //     username: this.user.username,
+        //     password: this.user.password
+        //   }
+        // })
+        this.$router.push({
+          name: 'login',
+          params: this.user
+        })
       } else {
         this.$toast(message)
       }
@@ -76,7 +87,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .tips{
   font-size: 14px;
   text-align:right;

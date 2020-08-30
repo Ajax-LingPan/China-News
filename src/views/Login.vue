@@ -32,6 +32,13 @@
 // 下载的axios 在哪里用就在那里导入
 // import axios from 'axios'
 export default {
+  created() {
+    // query,params这两个都可以通过$route 拿到数据
+    // console.log(this.$route.params);
+    const { username, password } = this.$route.params
+    this.username = username
+    this.password = password
+  },
   data() {
     return {
       username: '',
@@ -56,15 +63,17 @@ export default {
         username: this.username,
         password: this.password
       })
-      console.log(res.data)
-      // console.log(res.data.data.token);
-      // 对象结构 提取res对象中 statusCode message 的属性
-      const { statusCode, message } = res.data
+      // 对象结构 提取res对象中 statusCode message data的属性
+      const { statusCode, message, data } = res.data
       if (statusCode === 200) {
         // vant中的属性可以通过$直接调用,因为已经挂载到vue的原型上了
         this.$toast.success(message)
         // 校验通过跳转到user页面
         this.$router.push('/user')
+        // 获取当前登录用户的 token 和 id
+        localStorage.setItem('token', data.token)
+        localStorage.setItem('userId', data.user.id)
+        // console.log(data.user.id, data.token)
       } else {
         this.$toast(message)
       }
@@ -73,7 +82,7 @@ export default {
 }
 
 </script>
-<style lang='less'>
+<style scoped>
 .tips{
   font-size: 14px;
   text-align:right;
