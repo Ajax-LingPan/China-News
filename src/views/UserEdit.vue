@@ -210,6 +210,7 @@ export default {
   position: fixed;
   top: 0;
   z-index: 99;
+  background-color: #0000;
   .start{
     position: absolute;
     left: 0;
@@ -221,7 +222,9 @@ export default {
     right: 0;
     top:0;
     z-index: 99;
-
   }
+}
+.vue-cropper{
+  background-color: #000;
 }
 </style>

@@ -20,10 +20,11 @@ export default {
 }
 </script>
 
-<style lang='less'>
+<style lang='less' scoped>
 .vue_cropper {
   width: 100%;
   height: 100%;
   position: fixed;
 }
+
 </style>
