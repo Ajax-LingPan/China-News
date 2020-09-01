@@ -3,7 +3,7 @@
    <div class="nav_itme ">
       <div class="nav_left"><slot name="content">我的关注</slot></div>
       <div class="nav_right">
-      <span class="nav_title"> <slot name="title"></slot> </span>
+      <span class="nav_title" @click='clickfn'> <slot name="title"></slot> </span>
       <span class="iconfont iconjiantou1"></span>
     </div>
   </div>
@@ -19,6 +19,8 @@ export default {
         // 判断:如果父组件给当前子组件传跳转地址 则会跳转过去
         this.$router.push(this.to)
       }
+      // 给 组件 注册点击事件必须在模板内 通过$emit注册  子传父的概念
+      this.$emit('click')
     }
   },
   props: {

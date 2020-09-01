@@ -1,6 +1,6 @@
 <template>
 <div class="box">
- <div class="user">
+ <div class="user" @click="$router.push('/user_edit')">
    <div class="user_img">
      <img :src= 'base +user.head_img' alt="">
    </div>
@@ -24,9 +24,12 @@
     <template #content>我的收藏</template>
     <template #title>文章/视频</template>
  </hm_navbs>
- <hm_navbs to="/edit">
+ <hm_navbs to="/user_edit">
     <template #content>设置</template>
  </hm_navbs>
+ <div class="tuichu">
+   <van-button type="primary" block @click='logout'>退出登录</van-button>
+ </div>
 </div>
 </template>
 
@@ -41,25 +44,43 @@ export default {
   data() {
     return {
       user: ''
+      // name: 'LingPan',
+      // stature: '185cm'
     }
   },
   async created() {
-    const token = localStorage.getItem('token')
+    // const token = localStorage.getItem('token')
     const userId = localStorage.getItem('userId')
     // 定义一个res来接受异步函数传过来的参数
     const res = await this.$axios.get(`/user/${userId}`, {
       // axios设置(自定义)请求头
-      headers: {
-      // token 必须放在请求头中  请求头=> Authorizatio
-        Authorization: token
-      }
+      // headers: {
+      // // token 必须放在请求头中  请求头=> Authorizatio
+      //   Authorization: token
+      // }
     })
     // console.log(res)
-    // 解构res.data,从里面拿到需要的数据
+    // 解构res.data,从里面拿到需要的数据,写判断渲染数据
     const { statusCode, data } = res.data
     if (statusCode === 200) {
       this.user = data
-      console.log(data);
+    }
+    // 设置了全局token,就不需要考虑失败的提示
+  },
+  methods: {
+    async logout() {
+      try {
+        await this.$dialog.confirm({
+          title: '提示',
+          message: '确定退出吗'
+        })
+      } catch {
+        return this.$toast('取消退出')
+      }
+      localStorage.removeItem('token')
+      localStorage.removeItem('userId')
+      this.$router.push('/login')
+      this.$toast.success('退出成功')
     }
   }
 }
@@ -77,7 +98,6 @@ export default {
   /* background: linear-gradient(to right,gold,skyblue,hotpink); */
   /* animation: animation-first 0.1s linesar infinite alternate; */
   }
-
 .user_img{
   width: 70px;
   height: 70px;
@@ -108,6 +128,10 @@ export default {
 .user_jiantou {
  margin-left: 100px;
  color: #666;
+}
+.tuichu {
+  padding:0 10px;
+  margin-top: 3px;
 }
 @keyframes animation-first {
   0%{

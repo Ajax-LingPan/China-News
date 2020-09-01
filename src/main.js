@@ -4,7 +4,7 @@ import router from './router'
 import './style/base.less'
 import './style/iconfont.css'
 // 导入vant文件
-import Vant from 'vant'
+import Vant, { Toast } from 'vant'
 import 'vant/lib/index.css'
 
 // import Vue from 'vue'
@@ -18,6 +18,41 @@ import moment from 'moment'
 import Hmheader from './components/Hmheader.vue'
 import Hmlogo from './components/Hmlogo.vue'
 import Hmnavbs from './components/Hmnavbs.vue'
+
+// 设置全局路由导航守卫
+// router.beforeEach((to, from, next) => {
+//   const token = localStorage.getItem('token')
+//   const routePath = ['/login', '/user_edit']
+//   if (!routePath.includes(to.path) || token) {
+//     next()
+//   } else {
+//     router.push('/login')
+//   }
+// })
+// 将axios挂载到vue原型上
+Vue.prototype.$axios = axios
+// 给axios配置默认的基准地址
+axios.defaults.baseURL = 'http://localhost:3000'
+// 设置axios请求拦截器
+axios.interceptors.request.use(config => {
+  // config指的是请求的配置信息
+  const token = localStorage.getItem('token')
+  if (token) {
+    config.headers.Authorization = token
+  }
+  return config
+})
+// 设置axios 响应拦截器
+axios.interceptors.response.use(response => {
+  const { statusCode, message } = response.data
+  if (statusCode === 401 || message === '用户信息验证失败') {
+    Toast(message)
+    router.push('/login')
+    localStorage.removeItem('token')
+    localStorage.removeItem('userId')
+  }
+  return response
+})
 // 定义全局过滤器
 Vue.filter('time', input => {
   return moment(input).format('YYYY-MM-DD')
@@ -27,20 +62,6 @@ Vue.component('hm_logo', Hmlogo)
 Vue.component('hm_navbs', Hmnavbs)
 Vue.use(Vant)
 // Vue.use(Button)
-// 设置全局路由导航守卫
-router.beforeEach((to, from, next) => {
-  const token = localStorage.getItem('token')
-  if (to.name !== 'user' || token) {
-    next()
-  } else {
-    router.push('/login')
-  }
-})
-
-// 将axios挂载到vue原型上
-Vue.prototype.$axios = axios
-// 给axios配置默认的基准地址
-axios.defaults.baseURL = 'http://localhost:3000'
 Vue.config.productionTip = false
 new Vue({
   router,
