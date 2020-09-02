@@ -12,15 +12,15 @@
    </div>
      <span class="user_jiantou iconfont iconjiantou1"></span>
   </div>
- <hm_navbs to="/follow">
+ <hm_navbs to="/attention">
     <template #content>我的关注</template>
     <template #title>关注的用户</template>
  </hm_navbs>
- <hm_navbs>
+ <hm_navbs to="/lick">
     <template #content>我的帖子</template>
     <template #title>回复/点赞</template>
  </hm_navbs>
- <hm_navbs>
+ <hm_navbs to="/collect">
     <template #content>我的收藏</template>
     <template #title>文章/视频</template>
  </hm_navbs>

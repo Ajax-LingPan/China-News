@@ -29,10 +29,12 @@ import Hmnavbs from './components/Hmnavbs.vue'
 //     router.push('/login')
 //   }
 // })
+const URL = 'http://localhost:3000'
 // 将axios挂载到vue原型上
 Vue.prototype.$axios = axios
 // 给axios配置默认的基准地址
-axios.defaults.baseURL = 'http://localhost:3000'
+axios.defaults.baseURL = URL
+Vue.prototype.$base = URL
 // 设置axios请求拦截器
 axios.interceptors.request.use(config => {
   // config指的是请求的配置信息
@@ -54,8 +56,8 @@ axios.interceptors.response.use(response => {
   return response
 })
 // 定义全局过滤器
-Vue.filter('time', input => {
-  return moment(input).format('YYYY-MM-DD')
+Vue.filter('time', (input, str = 'YYYY-MM-DD') => {
+  return moment(input).format(str)
 })
 Vue.component('hm_header', Hmheader)
 Vue.component('hm_logo', Hmlogo)

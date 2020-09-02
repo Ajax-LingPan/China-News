@@ -225,6 +225,8 @@ export default {
   }
 }
 .vue-cropper{
+  background-image:none;
   background-color: #000;
 }
+
 </style>
