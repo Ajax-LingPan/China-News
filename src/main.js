@@ -35,6 +35,13 @@ Vue.prototype.$axios = axios
 // 给axios配置默认的基准地址
 axios.defaults.baseURL = URL
 Vue.prototype.$base = URL
+Vue.prototype.$url = (url) => {
+  if (url.startsWith('http')) {
+    return url
+  } else {
+    return URL + url
+  }
+}
 // 设置axios请求拦截器
 axios.interceptors.request.use(config => {
   // config指的是请求的配置信息
