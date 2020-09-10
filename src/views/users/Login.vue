@@ -68,15 +68,19 @@ export default {
       if (statusCode === 200) {
         // vant中的属性可以通过$直接调用,因为已经挂载到vue的原型上了
         this.$toast.success(message)
-        // 校验通过跳转到user页面
-        this.$router.push('/user')
-        // 获取当前登录用户的 token 和 id
-        localStorage.setItem('token', data.token)
-        localStorage.setItem('userId', data.user.id)
-        // console.log(data.user.id, data.token)
+        // 校验通过跳转到index页面
+        if (this.$route.query.back) {
+          this.$router.back()
+        } else {
+          this.$router.push('/')
+        }
       } else {
         this.$toast(message)
       }
+      // 获取当前登录用户的 token 和 id
+      localStorage.setItem('token', data.token)
+      localStorage.setItem('userId', data.user.id)
+      // console.log(data.user.id, data.token)
     }
   }
 }

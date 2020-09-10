@@ -18,7 +18,18 @@ import moment from 'moment'
 import Hmheader from './components/Hmheader.vue'
 import Hmlogo from './components/Hmlogo.vue'
 import Hmnavbs from './components/Hmnavbs.vue'
+import post from './components/Hmpost.vue'
+import Comment from './components/Comment.vue'
+import Floor from './components/Floor.vue'
 
+Vue.component('hm_header', Hmheader)
+Vue.component('hm_logo', Hmlogo)
+Vue.component('hm_navbs', Hmnavbs)
+Vue.component('post', post)
+Vue.component('comment', Comment)
+// 2 全局注册递归组件 floor
+Vue.component('floor', Floor)
+Vue.use(Vant)
 // 设置全局路由导航守卫
 // router.beforeEach((to, from, next) => {
 //   const token = localStorage.getItem('token')
@@ -66,10 +77,12 @@ axios.interceptors.response.use(response => {
 Vue.filter('time', (input, str = 'YYYY-MM-DD') => {
   return moment(input).format(str)
 })
-Vue.component('hm_header', Hmheader)
-Vue.component('hm_logo', Hmlogo)
-Vue.component('hm_navbs', Hmnavbs)
-Vue.use(Vant)
+// 定义时间过去式
+Vue.filter('now', input => {
+  return moment(input).fromNow()
+})
+// 格式化中文时间
+moment.locale('zh-CN')
 // Vue.use(Button)
 Vue.config.productionTip = false
 new Vue({

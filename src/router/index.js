@@ -1,14 +1,19 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-// 导入组件
-import Login from '../views/Login.vue'
-import Register from '../views/Register.vue'
-import User from '../views/User.vue'
-import UserEdit from '../views/UserEdit.vue'
-import Vuecropper from '../views/Vuecropper.vue'
-import Attention from '../views/Attention.vue'
-import Lick from '../views/Lick.vue'
-import Collect from '../views/Collect.vue'
+// 导入用户界面组件
+import Login from '../views/users/Login.vue'
+import Register from '../views/users/Register.vue'
+import User from '../views/users/User.vue'
+import UserEdit from '../views/users/UserEdit.vue'
+import Vuecropper from '../views/users/Vuecropper.vue'
+import Attention from '../views/users/Attention.vue'
+import Lick from '../views/users/Lick.vue'
+import Collect from '../views/users/Collect.vue'
+// 导入首页组件
+import Index from '../views/news/Index.vue'
+import Manage from '../views/news/Manage.vue'
+import Details from '../views/news/Details.vue'
+import Tosearch from '../views/news/Tosearch.vue'
 // 使用路由
 Vue.use(VueRouter)
 // 解决路由重复跳转的异常报错
@@ -26,7 +31,12 @@ const routes = [
   { path: '/vue_cropper', component: Vuecropper, name: 'vue_cropper' },
   { path: '/attention', component: Attention, name: 'attention' },
   { path: '/lick', component: Lick, name: 'lick' },
-  { path: '/collect', component: Collect, name: 'collect' }
+  { path: '/collect', component: Collect, name: 'collect' },
+  // 首页组件规则
+  { path: '/', component: Index, name: 'index' },
+  { path: '/manage', component: Manage, name: 'manage' },
+  { path: '/details/:id', component: Details, name: 'details' },
+  { path: '/tosearch', component: Tosearch, name: 'tosearch' }
 ]
 const router = new VueRouter({
   routes
